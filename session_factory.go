@@ -451,6 +451,20 @@ func (f sessionFactory) buildInitiatorSettings(session *session, settings *Sessi
 		}
 	}
 
+	if settings.HasSetting(config.Username) {
+		username, err := settings.Setting(config.Username)
+		if err == nil {
+			session.username = username
+		}
+	}
+
+	if settings.HasSetting(config.Password) {
+		password, err := settings.Setting(config.Password)
+		if err == nil {
+			session.password = password
+		}
+	}
+
 	return f.configureSocketConnectAddress(session, settings)
 }
 

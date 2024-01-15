@@ -74,6 +74,9 @@ const (
 	tagSignatureLength Tag = 93
 	tagSignature       Tag = 89
 	tagCheckSum        Tag = 10
+
+	tagUsername Tag = 553
+	tagPassword Tag = 554
 )
 
 // IsTrailer returns true if tag belongs in the message trailer.

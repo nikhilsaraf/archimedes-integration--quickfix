@@ -33,6 +33,10 @@ type session struct {
 	log       Log
 	sessionID SessionID
 
+	// logon message credentials
+	username string
+	password string
+
 	messageOut chan<- []byte
 	messageIn  <-chan fixIn
 
@@ -179,6 +183,13 @@ func (s *session) sendLogonInReplyTo(setResetSeqNum bool, inReplyTo *Message) er
 
 	if len(s.DefaultApplVerID) > 0 {
 		logon.Body.SetField(tagDefaultApplVerID, FIXString(s.DefaultApplVerID))
+	}
+
+	if s.username != "" {
+		logon.Body.SetField(tagUsername, FIXString(s.username))
+	}
+	if s.password != "" {
+		logon.Body.SetField(tagPassword, FIXString(s.password))
 	}
 
 	if err := s.dropAndSendInReplyTo(logon, inReplyTo); err != nil {
